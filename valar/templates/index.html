@@ -2,5 +2,43 @@
 {% block content %}
 <h1>Hello Arda!</h1>
 <br>
-<p>Getting er done</p>
+    {% for s in hosts %}
+      <h3>{{s}}</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Msg</th>
+            <th>Code</th>
+            <th>When</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{sums[s].STATUS[0].STATUS}}</td>
+            <td>{{sums[s].STATUS[0].Msg}}</td>
+            <td>{{sums[s].STATUS[0].Code}}</td>
+            <td>{{sums[s].STATUS[0].When}}</td>
+            <td>{{sums[s].STATUS[0].Description}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <table>
+      <thead></thead>
+      <tbody>
+        {% for k, v in sums[s].SUMMARY[0].items() %}
+          <tr><td><strong>{{k}}:</strong></td><td>{{sums[s].SUMMARY[0][k]}}</td></tr>
+        {% endfor %}
+      </tbody>
+      </table>
+    {% endfor %}
 {% endblock %}
+
+
+
+
+
+
+
