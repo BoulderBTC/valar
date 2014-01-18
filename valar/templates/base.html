@@ -1,0 +1,14 @@
+<html>
+  <head>
+    {% if title %}
+        <title>{{title}} - Valar: Guardians of Middle Earth</title>
+    {% else %}
+        <title>Valar: Guardians of Middle Earth</title>
+    {% endif %}
+  </head>
+   <body>
+    <div>Valar: <a href="/index">Home</a></div>
+    <hr>
+    {% block content %}{% endblock %}
+  </body>
+</html>
