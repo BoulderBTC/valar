@@ -8,31 +8,66 @@
         <thead>
           <tr>
             <th>Status</th>
-            <th>Msg</th>
-            <th>Code</th>
             <th>When</th>
-            <th>Description</th>
+            <th>Running</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>{{sums[s].STATUS[0].STATUS}}</td>
-            <td>{{sums[s].STATUS[0].Msg}}</td>
-            <td>{{sums[s].STATUS[0].Code}}</td>
             <td>{{sums[s].STATUS[0].When}}</td>
             <td>{{sums[s].STATUS[0].Description}}</td>
           </tr>
         </tbody>
       </table>
+      
+
       <br>
       <table>
-      <thead></thead>
+      <thead>
+        <tr>
+          <th>Found</th>
+          <th>Accepted</th>
+          <th>Rejected</th>
+          <th>Stale</th>
+          <th>Get Failures</th>
+          <th>HW</th>
+        </tr>
+      </thead>
       <tbody>
-        {% for k, v in sums[s].SUMMARY[0].items() %}
-          <tr><td><strong>{{k}}:</strong></td><td>{{sums[s].SUMMARY[0][k]}}</td></tr>
-        {% endfor %}
+
+          <tr>
+              <td>{{sums[s].SUMMARY[0]['Found Blocks']}}</td>
+              <td>{{sums[s].SUMMARY[0]['Accepted']}}</td>
+              <td>{{sums[s].SUMMARY[0]['Rejected']}}</td>
+              <td>{{sums[s].SUMMARY[0]['Stale']}}</td>
+              <td>{{sums[s].SUMMARY[0]['Get Failures']}}</td>
+              <td>{{sums[s].SUMMARY[0]['Hardware Errors']}}</td>
+          </tr>
+
       </tbody>
       </table>
+      <br>
+            <table>
+      <thead>
+        <tr>
+          <th>AVG MH/s</th>
+          <th>5s MH/s</th>
+          <th>WU</th>
+        </tr>
+      </thead>
+      <tbody>
+
+          <tr>
+              <td>{{sums[s].SUMMARY[0]['MHS av']}}</td>
+              <td>{{sums[s].SUMMARY[0]['MHS 5s']}}</td>
+              <td>{{sums[s].SUMMARY[0]['Work Utility']}}</td>
+          </tr>
+
+      </tbody>
+      </table>
+      
+      <hr>
     {% endfor %}
 {% endblock %}
 
