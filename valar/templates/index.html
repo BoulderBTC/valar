@@ -4,8 +4,9 @@
     
     <br>
     {% for s in hosts %}
+    <section>
       <h2>{{s}}</h2>
-      <table class='table'>
+      <table class='table table-striped'>
         <thead>
           <tr>
             <th>Status</th>
@@ -23,52 +24,52 @@
       </table>
       
 
-      <br>
-      <table class='table'>
-      <thead>
-        <tr>
-          <th>Found</th>
-          <th>Accepted</th>
-          <th>Rejected</th>
-          <th>Stale</th>
-          <th>Get Failures</th>
-          <th>HW</th>
-        </tr>
-      </thead>
-      <tbody>
+      <table class='table table-striped'>
+          <thead>
+            <tr>
+              <th>Found</th>
+              <th>Accepted</th>
+              <th>Rejected</th>
+              <th>Stale</th>
+              <th>Get Failures</th>
+              <th>HW</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-              <td>{{sums[s].SUMMARY[0]['Found Blocks']}}</td>
-              <td>{{sums[s].SUMMARY[0]['Accepted']}}</td>
-              <td>{{sums[s].SUMMARY[0]['Rejected']}}</td>
-              <td>{{sums[s].SUMMARY[0]['Stale']}}</td>
-              <td>{{sums[s].SUMMARY[0]['Get Failures']}}</td>
-              <td>{{sums[s].SUMMARY[0]['Hardware Errors']}}</td>
-          </tr>
+              <tr>
+                  <td>{{sums[s].SUMMARY[0]['Found Blocks']}}</td>
+                  <td>{{sums[s].SUMMARY[0]['Accepted']}}</td>
+                  <td>{{sums[s].SUMMARY[0]['Rejected']}}</td>
+                  <td>{{sums[s].SUMMARY[0]['Stale']}}</td>
+                  <td>{{sums[s].SUMMARY[0]['Get Failures']}}</td>
+                  <td>{{sums[s].SUMMARY[0]['Hardware Errors']}}</td>
+              </tr>
 
-      </tbody>
+          </tbody>
       </table>
  
-      <table class="table">
-      <thead>
-        <tr>
-          <th>AVG MH/s</th>
-          <th>5s MH/s</th>
-          <th>WU</th>
-        </tr>
-      </thead>
-      <tbody>
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>AVG MH/s</th>
+              <th>5s MH/s</th>
+              <th>WU</th>
+            </tr>
+          </thead>
+          <tbody>
 
-          <tr>
-              <td>{{sums[s].SUMMARY[0]['MHS av']}}</td>
-              <td>{{sums[s].SUMMARY[0]['MHS 5s']}}</td>
-              <td>{{sums[s].SUMMARY[0]['Work Utility']}}</td>
-          </tr>
+              <tr>
+                  <td>{{sums[s].SUMMARY[0]['MHS av']}}</td>
+                  <td>{{sums[s].SUMMARY[0]['MHS 5s']}}</td>
+                  <td>{{sums[s].SUMMARY[0]['Work Utility']}}</td>
+              </tr>
 
-      </tbody>
+          </tbody>
       </table>
       
       <hr>
+    </section>
     {% endfor %}
     
 {% endblock %}
