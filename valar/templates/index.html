@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Hello Arda!</h1>
-<br>
+<!-- Static navbar -->
+    
+    <br>
     {% for s in hosts %}
-      <h3>{{s}}</h3>
-      <table>
+      <h2>{{s}}</h2>
+      <table class='table'>
         <thead>
           <tr>
             <th>Status</th>
@@ -23,7 +24,7 @@
       
 
       <br>
-      <table>
+      <table class='table'>
       <thead>
         <tr>
           <th>Found</th>
@@ -47,8 +48,8 @@
 
       </tbody>
       </table>
-      <br>
-            <table>
+ 
+      <table class="table">
       <thead>
         <tr>
           <th>AVG MH/s</th>
@@ -69,6 +70,7 @@
       
       <hr>
     {% endfor %}
+    
 {% endblock %}
 
 
