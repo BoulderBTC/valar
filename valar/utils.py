@@ -7,12 +7,7 @@ from valar import settings
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
 def get_hosts():
-    hosts = []
-    with open(root_dir + '/hosts.txt') as ifile:
-        for l in ifile.readlines():
-            hosts.append(l.strip())
-
-    return hosts
+    return settings.hosts
 
 def get_summaries(hosts):
     results = {}
