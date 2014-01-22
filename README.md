@@ -16,3 +16,9 @@ Put this in valar/ next to views.py
       'hostname1',
       'hostname2',
     ]
+
+To run:
+
+    sudo pip install flask
+    cd path/to/valar/
+    python runserver.py
