@@ -21,11 +21,10 @@ Put this in valar/ next to views.py
 
 1. Install python
 2. Install mongodb
-3. Install the following python libraries
-
-    sudo pip install flask
-    sudo pip install pymongo
-    sudo pip install celery
+3. Install the following python libraries  
+    `sudo pip install flask`  
+    `sudo pip install pymongo`  
+    `sudo pip install celery`
 
 ## To run:
 
