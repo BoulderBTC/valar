@@ -17,8 +17,23 @@ Put this in valar/ next to views.py
       'hostname2',
     ]
 
-To run:
+## To install:
+
+1. Install python
+2. Install mongodb
+3. Install the following python libraries
 
     sudo pip install flask
-    cd path/to/valar/
-    python runserver.py
+    sudo pip install pymongo
+    sudo pip install celery
+
+## To run:
+
+`cd path/to/valar/`
+
+1. Start the mongodb daemon  
+`mongod`
+2. Start the python celery worker which aggregates your data  
+`celery -A tasks worker --loglevel=info --beat`
+3. `python runserver.py`
+
