@@ -1,0 +1,46 @@
+.container {
+  -moz-column-count:2;
+  -webkit-column-count:2;
+  column-count:2;
+}
+section {
+  background: #eee;
+  margin-bottom: 20px;
+  break-inside: avoid-column;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+}
+section h2 {
+  padding: 5px;
+  background: #1333ac;
+  color: #fff;
+  margin: 0;
+}
+section:nth-child(2) h2 {
+  background: #ffad00;
+}
+section:nth-child(3) h2 {
+  background: #00b358;
+}
+section:nth-child(4) h2 {
+  background: #ff3d00;
+}
+
+.bubble {
+   -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  display: block;
+}
+section h2+.bubble {
+  float: right;
+  background: #fff;
+  position: relative;
+  top: -2.5em;
+  padding: 5px;
+  margin: 0 5px -2.5em 5px;
+}
+
+section .table {
+  margin: 0;
+}
