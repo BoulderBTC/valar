@@ -1,6 +1,8 @@
 Valar
 =====
 
+[![Valar in action](https://github.com/frodopwns/valar/wiki/valar-thumbnail.png)](https://github.com/frodopwns/valar/wiki/valar.png)
+
 Watching over middle earth since....forever
 
 Note:  The hosts found in settings.py should be set in /etc/hosts or you should use an ip instead
