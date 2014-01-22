@@ -6,14 +6,21 @@ from valar import settings
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
-def get_hosts():
-    return settings.hosts
+hosts = settings.hosts
 
-def get_summaries(hosts):
+def get_summaries():
     results = {}
     for h in hosts:
         cgm = CgminerAPI(host=h)
         results[h] = cgm.summary()
+    return results
+
+def get_devices():
+    results = {}
+    for h in hosts:
+        cgm = CgminerAPI(host=h)
+        data = cgm.devs()
+        results[h] = data['DEVS']
     return results
 
 def send_mail(subject, message):

@@ -67,9 +67,33 @@
 
           </tbody>
       </table>
-      
+      <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>GPU</th>
+                <th>Temp</th>
+                <th>Fan Speed</th>
+                <th>MHS 5s</th>
+                <th>HW</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for d in devs[s] %}
+            <tr>
+                <td>{{d.GPU}}:</td>
+                <td>{{d.Temperature}}C</td>
+                <td>{{d['Fan Speed']}}RPM ({{d['Fan Percent']}}%)</td>
+                <td>{{d['MHS 5s']}}MH/s</td>
+                <td>{{d['Hardware Errors']}}</td>
+                <td>{{d['Status']}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+      </table>
       <hr>
     </section>
+
     {% endfor %}
     
 {% endblock %}

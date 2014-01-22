@@ -1,10 +1,15 @@
 from flask import render_template
 from valar import app
-from valar.utils import get_hosts, get_summaries
+from valar.utils import hosts, get_summaries, get_devices
 
 @app.route('/')
 def index():
-    hosts = get_hosts()
-    sums = get_summaries(hosts)
-    return render_template("index.html", title = 'Valar', sums = sums, hosts = hosts)
+    sums = get_summaries()
+    devs = get_devices()
+    return render_template("index.html", 
+        title = 'Valar', 
+        hosts = hosts, 
+        sums = sums, 
+        devs = devs
+    )
 
