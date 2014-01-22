@@ -1,6 +1,6 @@
 import socket
 import json
-
+import logging
 
 class CgminerAPI(object):
     """ Cgminer RPC API wrapper. """
@@ -26,8 +26,11 @@ class CgminerAPI(object):
             sock.send(json.dumps(payload))
             received = self._receive(sock)
         finally:
+          try:
             sock.shutdown(socket.SHUT_RDWR)
-            sock.close()
+          except socket.error, errno:
+            logging.error(str(errno))
+          sock.close()
 
         return json.loads(received[:-1])
 
