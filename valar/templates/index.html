@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <!-- Static navbar -->
-    
-    <br>
+
     {% for s in hosts %}
     <section>
       <h2>{{s}}</h2>
+      <strong class="bubble">{{sums[s].SUMMARY[0]['MHS 5s']}} MH/s</strong>
       <table class='table table-striped'>
         <thead>
           <tr>
@@ -22,7 +22,6 @@
           </tr>
         </tbody>
       </table>
-      
 
       <table class='table table-striped'>
           <thead>
@@ -48,7 +47,7 @@
 
           </tbody>
       </table>
- 
+
       <table class="table table-striped">
           <thead>
             <tr>
@@ -91,16 +90,9 @@
         {% endfor %}
         </tbody>
       </table>
-      <hr>
     </section>
 
     {% endfor %}
-    
+
 {% endblock %}
-
-
-
-
-
-
 
