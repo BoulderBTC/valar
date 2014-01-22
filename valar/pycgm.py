@@ -14,11 +14,11 @@ class CgminerAPI(object):
         send a command (a json encoded dict) and
         receive the response (and decode it).
         """
+        payload = {"command": command}
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         try:
             sock.connect((self.host, self.port))
-            payload = {"command": command}
             if arg is not None:
                 # Parameter must be converted to basestring (no int)
                 payload.update({'parameter': unicode(arg)})
@@ -26,6 +26,7 @@ class CgminerAPI(object):
             sock.send(json.dumps(payload))
             received = self._receive(sock)
         finally:
+          #avoid error on OSX
           try:
             sock.shutdown(socket.SHUT_RDWR)
           except socket.error, errno:
