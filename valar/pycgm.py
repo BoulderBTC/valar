@@ -16,7 +16,7 @@ class CgminerAPI(object):
         """
         payload = {"command": command}
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+        sock.settimeout(3)
         try:
             sock.connect((self.host, self.port))
             if arg is not None:
@@ -25,6 +25,9 @@ class CgminerAPI(object):
 
             sock.send(json.dumps(payload))
             received = self._receive(sock)
+        except:
+            logging.error("found an error...timeout")
+            raise Exception("Timeout")
         finally:
           #avoid error on OSX
           try:

@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 <!-- Static navbar -->
-
+  
     {% for s in hosts %}
     <section>
       <h2>{{s}}</h2>
+      {% if s in sums %}
       <strong class="bubble">{{sums[s].SUMMARY[0]['MHS 5s']}} MH/s</strong>
       <table class='table table-striped'>
         <thead>
@@ -90,8 +91,11 @@
         {% endfor %}
         </tbody>
       </table>
+      {% else %}
+     <p> error</p>
+      {% endif %}
     </section>
-
+    
     {% endfor %}
 
 {% endblock %}
