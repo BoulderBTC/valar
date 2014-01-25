@@ -25,8 +25,8 @@ Put this in valar/ next to views.py
 2. Install mongodb
 3. Install the following python libraries  
     `sudo pip install flask`  
-    `sudo pip install pymongo`  
     `sudo pip install celery`
+    `sudo pip install eve`
 
 ## To run:
 
