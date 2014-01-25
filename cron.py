@@ -1,11 +1,10 @@
 import socket
-from valar.utils import get_hosts, send_mail
+from valar.utils import hosts, send_mail
 from valar.pycgm import CgminerAPI
 
 
 if __name__ == '__main__':
     result = False
-    hosts = get_hosts()
     for h in hosts:
         print h, "\n"
         try:

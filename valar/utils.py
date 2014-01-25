@@ -1,5 +1,6 @@
 import os
 import smtplib
+import logging
 from email.mime.text import MIMEText
 from valar.pycgm import CgminerAPI
 from valar import settings
@@ -12,15 +13,22 @@ def get_summaries():
     results = {}
     for h in hosts:
         cgm = CgminerAPI(host=h)
-        results[h] = cgm.summary()
+        try:
+            results[h] = cgm.summary()
+        except Exception, errno:
+            logging.error("Timeout: " + str(Exception))
     return results
 
 def get_devices():
     results = {}
     for h in hosts:
         cgm = CgminerAPI(host=h)
-        data = cgm.devs()
-        results[h] = data['DEVS']
+        try:
+            data = cgm.devs()
+            results[h] = data['DEVS']
+        except Exception, errno:
+            logging.error("timeout")
+            
     return results
 
 def send_mail(subject, message):
