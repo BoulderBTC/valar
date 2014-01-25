@@ -1,21 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-    eve-demo settings
-    ~~~~~~~~~~~~~~~~~
-
-    Settings file for our little demo.
-
-    PLEASE NOTE: We don't need to create the two collections in MongoDB.
-    Actually, we don't even need to create the database: GET requests on an
-    empty/non-existant DB will be served correctly ('200' OK with an empty
-    collection); DELETE/PATCH will receive appropriate responses ('404' Not
-    Found), and POST requests will create database and collections when needed.
-    Keep in mind however that such an auto-managed database will most likely
-    perform poorly since it lacks any sort of optimized index.
-
-    :copyright: (c) 2013 by Nicola Iarocci.
-    :license: BSD, see LICENSE for more details.
+    Valar API settings and schema
 """
 
 import os
@@ -69,8 +55,8 @@ stats = {
             'type': 'objectid',
             'required': True,
             # referential integrity constraint: value must exist in the
-            # 'people' collection. Since we aren't declaring a 'field' key,
-            # will default to `people._id` (or, more precisely, to whatever
+            # 'miner' collection. Since we aren't declaring a 'field' key,
+            # will default to `miner._id` (or, more precisely, to whatever
             # ID_FIELD value is).
             'data_relation': {
                 'resource': 'miner'
