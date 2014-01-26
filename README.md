@@ -35,6 +35,6 @@ Put this in valar/ next to views.py
 1. Start the mongodb daemon  
 `mongod`
 2. Start the python celery worker which aggregates your data  
-`celery -A tasks worker --loglevel=info --beat`
+`celery -A valar.tasks worker --loglevel=info --beat`
 3. `python runserver.py`
 
