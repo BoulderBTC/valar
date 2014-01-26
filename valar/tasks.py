@@ -1,13 +1,15 @@
 from celery import Celery
 from datetime import timedelta
-from valar import app, settings
+#from valar import app
+from valar import valar_settings as settings
 from valar.utils import get_summaries, get_devices
 import logging
 
 hosts = settings.hosts
 
 app = Celery('tasks')
-app.config_from_object('celeryconfig')
+from valar import celeryconfig
+app.config_from_object(celeryconfig)
 
 @app.task
 def save_miner_stats():

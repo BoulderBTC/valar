@@ -3,7 +3,7 @@ import smtplib
 import logging
 from email.mime.text import MIMEText
 from valar.pycgm import CgminerAPI
-from valar import settings
+from valar import valar_settings as settings
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
