@@ -21,8 +21,8 @@ Watching over middle earth since....forever
 > toaddrs = ['recipient1@example.com', 'recipient2@example.com']  
 > email_sender = "youruser@gmail.com"  
 > hosts = [  
->  'hostname1',  
->  'hostname2',  
+> &nbsp;&nbsp;'hostname1',  
+> &nbsp;&nbsp;'hostname2',  
 > ]
 
 Note:  The hosts found in valar_settings.py should be set in /etc/hosts or you should use an ip instead
