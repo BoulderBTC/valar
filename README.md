@@ -14,7 +14,7 @@ Watching over middle earth since....forever
     `sudo pip install celery`  
     `sudo pip install eve`  
 4. Clone valar repo
-5. Create and configure valar/valar_settings.py:  
+5. Create and configure valar/valar_settings.py:
 
     gmail_user  = 'gmail username'
     gmail_password = 'gmail application specific password'
