@@ -5,10 +5,16 @@ Valar
 
 Watching over middle earth since....forever
 
-Note:  The hosts found in settings.py should be set in /etc/hosts or you should use an ip instead
+## To install:
 
-In order for email notifications to work you need a settings.py file.
-Put this in valar/ next to views.py
+1. Install python
+2. Install mongodb
+3. Install the following python libraries  
+    `sudo pip install flask`  
+    `sudo pip install celery`  
+    `sudo pip install eve`  
+4. Clone valar repo
+5. Create and configure valar/valar_settings.py:  
 
     gmail_user  = 'gmail username'
     gmail_password = 'gmail application specific password'
@@ -19,14 +25,7 @@ Put this in valar/ next to views.py
       'hostname2',
     ]
 
-## To install:
-
-1. Install python
-2. Install mongodb
-3. Install the following python libraries  
-    `sudo pip install flask`  
-    `sudo pip install celery`  
-    `sudo pip install eve`  
+Note:  The hosts found in valar_settings.py should be set in /etc/hosts or you should use an ip instead
 
 ## To run:
 
