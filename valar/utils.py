@@ -1,6 +1,7 @@
 import os
 import smtplib
 import logging
+import socket
 from email.mime.text import MIMEText
 from valar.pycgm import CgminerAPI
 from valar import valar_settings as settings
@@ -30,6 +31,20 @@ def get_devices():
             logging.error("timeout")
             
     return results
+
+
+def check_worker(h):
+    result = False
+    print h, "\n"
+    try:
+        cgm = CgminerAPI(host=h)
+        result = cgm.summary()
+    except socket.error as e:
+        subject = "{0} - ERROR".format(h)
+        message = "{0} - Error\n\n{1}".format(h, e)
+        send_mail(subject, message)
+    print result
+
 
 def send_mail(subject, message):
     username = settings.gmail_user
