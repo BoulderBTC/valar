@@ -27,6 +27,167 @@
     <div class="container">
     {% block content %}{% endblock %}
     </div> <!-- /container -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+    
+    <script type="text/template" id="test-template">
+         <% _.each(miners, function(miner) { %>
+             <section>
+             <h2><%= htmlEncode(miner.get('name')) %></h2>
+                 <strong class="bubble"><%= htmlEncode(miner.get('MHS 5s')) %> MH/s</strong>
+                 <table class='table table-striped'>
+                    <thead>
+                      <tr>
+                        <th>Status</th>
+                        <th>When</th>
+                        <th>Running</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><%= htmlEncode(miner.get('STATUS')) %></td>
+                        <td><%= htmlEncode(miner.get('When')) %></td>
+                        <td><%= htmlEncode(miner.get('Description')) %></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  
+                  <table class='table table-striped'>
+                      <thead>
+                        <tr>
+                          <th>Found</th>
+                          <th>Accepted</th>
+                          <th>Rejected</th>
+                          <th>Stale</th>
+                          <th>Get Failures</th>
+                          <th>HW</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td><%= htmlEncode(miner.get('Found Blocks')) %></td>
+                              <td><%= htmlEncode(miner.get('Accepted')) %></td>
+                              <td><%= htmlEncode(miner.get('Rejected')) %></td>
+                              <td><%= htmlEncode(miner.get('Stale')) %></td>
+                              <td><%= htmlEncode(miner.get('Get Failures')) %></td>
+                              <td><%= htmlEncode(miner.get('Hardware Errors')) %></td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  
+                  <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>AVG MH/s</th>
+                          <th>5s MH/s</th>
+                          <th>WU</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                          <tr>
+                              <td><%= htmlEncode(miner.get('MHS av')) %></td>
+                              <td><%= htmlEncode(miner.get('MHS 5s')) %></td>
+                              <td><%= htmlEncode(miner.get('Work Utility')) %></td>
+                          </tr>
+
+                      </tbody>
+                  </table>
+                  
+                  <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>GPU</th>
+                            <th>Temp</th>
+                            <th>Fan Speed</th>
+                            <th>MHS 5s</th>
+                            <th>HW</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+  
+                    <% _.each(miner.get('devices'), function(gpu) { %>
+                        <tr>
+                            <td><%= htmlEncode(gpu['GPU']) %>:</td>
+                            <td><%= htmlEncode(gpu['Temperature']) %></td>
+                            <td><%= htmlEncode(gpu['Fan Speed']) %>RPM (<%= htmlEncode(gpu['Fan Percent']) %>%)</td>
+                            <td><%= htmlEncode(gpu['MHS 5s']) %></td>
+                            <td><%= htmlEncode(gpu['Hardware Errors']) %></td>
+                            <td><%= htmlEncode(gpu['Status']) %></td>
+                        </tr>
+                    <% }); %>
+                    <% for(var item in miner.devices) { %>
+                        <tr><td>miner.devices[item].get('GPU');</td></tr>
+                    <% } %>
+                    </tbody>
+                  </table>
+             </section>
+         <% }); %>
+    </script>
+    
+    <script>
+        function htmlEncode(value){
+          return $('<div/>').text(value).html();
+        }
+        $.fn.serializeObject = function() {
+          var o = {};
+          var a = this.serializeArray();
+          $.each(a, function() {
+              if (o[this.name] !== undefined) {
+                  if (!o[this.name].push) {
+                      o[this.name] = [o[this.name]];
+                  }
+                  o[this.name].push(this.value || '');
+              } else {
+                  o[this.name] = this.value || '';
+              }
+          });
+          return o;
+        };
+
+
+        var Miners = Backbone.Collection.extend({
+          url: '/miner'
+        });
+
+        var Miner = Backbone.Model.extend({
+          urlRoot: '/miner'
+        });
+
+        var MinerListView = Backbone.View.extend({
+          el: '#page',
+          render: function () {
+            var that = this;
+            var miners = new Miners();
+
+            miners.fetch({
+              success: function (miners) {  
+                  var template = _.template($('#test-template').html(), {miners: miners.models});
+                  that.$el.html(template);
+              }
+            });
+
+          }
+        });
+
+        var minerListView = new MinerListView();
+
+        var Router = Backbone.Router.extend({
+            routes: {
+              "": "home", 
+            }
+        });
+
+        var router = new Router;
+        router.on('route:home', function() {
+          // render Miner list
+          minerListView.render();
+        })
+
+        Backbone.history.start();
+    </script>
   </body>
 </html>
 
