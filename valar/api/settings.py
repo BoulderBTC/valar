@@ -35,17 +35,14 @@ miner = {
     }
 }
 
-stats = {
+stat = {
 
     # Schema definition, based on Cerberus grammar. Check the Cerberus project
     # (https://github.com/nicolaiarocci/cerberus) for details.
     'schema': {
-        'firstname': {
-            'type': 'string',
-        },
-        'lastname': {
-            'type': 'string',
-            'unique': True,
+
+        'hashrate': {
+            'type': 'integer',
         },
 
         'when': {
@@ -71,5 +68,5 @@ stats = {
 # be accessible to the API consumer.
 DOMAIN = {
     'miner': miner,
-    'stats': stats,
+    'stat': stat,
 }

@@ -4,6 +4,7 @@ import json
 from valar import app
 from valar.utils import hosts, get_summaries, get_devices
 import pprint
+
 @app.route('/')
 def index():
     sums = get_summaries()
@@ -21,7 +22,6 @@ def get_miners():
     results = []
     sums = get_summaries()
     devs = get_devices()
-    pprint.pprint(devs)
     for k, v in sums.iteritems():
         data = dict(
           [('name', k)] + \

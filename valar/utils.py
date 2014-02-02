@@ -2,20 +2,28 @@ import os
 import smtplib
 import logging
 import socket
+import requests
 from email.mime.text import MIMEText
 from valar.pycgm import CgminerAPI
 from valar import valar_settings as settings
+from valar_settings import valar_api
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
 
-hosts = settings.hosts
+url = valar_api + "miner/"
+r = requests.get(url)
+if r.ok:
+    hosts = r.json()['_items']
+else:
+    hosts = settings.hosts
+
 
 def get_summaries():
     results = {}
     for h in hosts:
-        cgm = CgminerAPI(host=h)
+        cgm = CgminerAPI(host=h['hostname'])
         try:
-            results[h] = cgm.summary()
+            results[h['name']] = cgm.summary()
         except Exception, errno:
             logging.error("Timeout: " + str(Exception))
     return results
@@ -23,10 +31,10 @@ def get_summaries():
 def get_devices():
     results = {}
     for h in hosts:
-        cgm = CgminerAPI(host=h)
+        cgm = CgminerAPI(host=h['hostname'])
         try:
             data = cgm.devs()
-            results[h] = data['DEVS']
+            results[h['name']] = data['DEVS']
         except Exception, errno:
             logging.error("timeout")
             
