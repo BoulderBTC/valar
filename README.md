@@ -10,30 +10,23 @@ Watching over middle earth since....forever
 1. Install python
 2. Install mongodb
 3. Install the following python libraries  
+    `sudo pip install requests`  
     `sudo pip install flask`  
     `sudo pip install celery`  
     `sudo pip install eve`  
 4. Clone valar repo
-5. Create and configure valar/valar_settings.py:
-
-> gmail_user  = 'gmail username'  
-> gmail_password = 'gmail application specific password'  
-> toaddrs = ['recipient1@example.com', 'recipient2@example.com']  
-> email_sender = "youruser@gmail.com"  
-> hosts = [  
-> &nbsp;&nbsp;'hostname1',  
-> &nbsp;&nbsp;'hostname2',  
-> ]
-
-Note:  The hosts found in valar_settings.py should be set in /etc/hosts or you should use an ip instead
+5. `cp valar/example.valar_settings.py valar/valar_settings.py`
+6. Make any adjustments to valar/valar_settings.py
 
 ## To run:
 
 `cd path/to/valar/`
 
-1. Start the mongodb daemon  
-`mongod`
-2. Start the python celery worker which aggregates your data  
+1. Start mongodb  
+`sudo service mondodb start`
+2. Start the python eve api  
+`python valar/api/run.py`
+3. Start the python celery worker which aggregates your data  
 `celery -A valar.tasks worker --loglevel=info --beat`
-3. `python runserver.py`
+4. `python runserver.py`
 
