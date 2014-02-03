@@ -3,6 +3,7 @@ import smtplib
 import logging
 import socket
 import requests
+import json
 from email.mime.text import MIMEText
 from valar.pycgm import CgminerAPI
 from valar import valar_settings as settings
@@ -12,10 +13,15 @@ root_dir = os.path.dirname(os.path.abspath(__file__))
 
 url = valar_api + "miner/"
 r = requests.get(url)
-if r.ok:
+if r.ok and len(r.json()['_items']) > 0:
     hosts = r.json()['_items']
 else:
-    hosts = settings.hosts
+    payload = settings.hosts
+    headers = {"content-type": "application/json"}
+    r = requests.post(url, headers = headers, data = json.dumps(payload))
+    r = requests.get(url)
+    hosts = r.json()['_items']
+
 
 
 def get_summaries():
