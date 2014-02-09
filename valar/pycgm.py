@@ -1,6 +1,9 @@
 import socket
 import json
 import logging
+import smtplib
+from email.mime.text import MIMEText
+from valar import valar_settings as settings
 
 class CgminerAPI(object):
     """ Cgminer RPC API wrapper. """
@@ -26,8 +29,9 @@ class CgminerAPI(object):
             sock.send(json.dumps(payload))
             received = self._receive(sock)
         except:
-            logging.error("found an error...timeout")
-            raise Exception("Timeout")
+            subject = "{0} - ERROR".format(self.host)
+            message = "{0} - Error\n\n{1}".format(self.host, "timeout")
+            send_mail(subject, message)
         finally:
           #avoid error on OSX
           try:
@@ -58,3 +62,16 @@ class CgminerAPI(object):
         def out(arg=None):
             return self.command(attr, arg)
         return out
+
+def send_mail(subject, message):
+    username = settings.gmail_user
+    password = settings.gmail_password
+    server = smtplib.SMTP('smtp.gmail.com:587')
+    server.starttls()
+    server.login(username,password)
+    msg = MIMEText(message)
+    sender = settings.email_sender
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = ", ".join(settings.toaddrs)
+    server.sendmail(sender, settings.toaddrs, msg.as_string())
