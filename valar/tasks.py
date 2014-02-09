@@ -6,7 +6,7 @@ import requests
 import logging
 #from valar import app
 from valar import valar_settings as settings
-from valar.utils import get_summaries, get_devices, hosts
+from valar.utils import get_summaries, get_devices, hosts, check_workers
 from valar_settings import valar_api
 
 
@@ -18,6 +18,8 @@ app.config_from_object(celeryconfig)
 
 @app.task
 def save_miner_stats():
+  if not check_workers():
+      return 0
   sums = get_summaries()
   devs = get_devices()
   payload = []
@@ -32,5 +34,4 @@ def save_miner_stats():
   headers = {"content-type": "application/json"}
   url = valar_api + "stat/"
   r = requests.post(url, headers = headers, data = json.dumps(payload))
-  
   return 'Success' if r.ok else 'failure'
