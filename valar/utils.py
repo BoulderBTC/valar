@@ -3,6 +3,8 @@ import logging
 import socket
 import requests
 import json
+import smtplib
+from email.mime.text import MIMEText
 from valar.pycgm import CgminerAPI
 from valar import valar_settings as settings
 from valar_settings import valar_api
@@ -22,23 +24,26 @@ else:
 
 
 def get_summaries():
-    results = {}
+    results = {"err": []}
     for h in hosts:
         cgm = CgminerAPI(host=h['hostname'])
         try:
             results[h['name']] = cgm.summary()
         except Exception, errno:
-            logging.error("Timeout: " + str(Exception))
+            output = "Timeout: " + h['name'] + " " + str(Exception)
+            results["err"].append(h["name"] + " - " + output) 
+            logging.error(output)
     return results
 
 def get_devices():
-    results = {}
+    results = {"err": []}
     for h in hosts:
         cgm = CgminerAPI(host=h['hostname'])
         try:
             data = cgm.devs()
             results[h['name']] = data['DEVS']
         except Exception, errno:
+            results["err"].append(h["name"] + " timeout!")
             logging.error("timeout")
             
     return results
@@ -61,4 +66,15 @@ def check_worker(h):
     return True
 
 
-
+def send_mail(subject, message):
+    username = settings.gmail_user
+    password = settings.gmail_password
+    server = smtplib.SMTP('smtp.gmail.com:587')
+    server.starttls()
+    server.login(username,password)
+    msg = MIMEText(message)
+    sender = settings.email_sender
+    msg['Subject'] = subject
+    msg['From'] = sender
+    msg['To'] = ", ".join(settings.toaddrs)
+    server.sendmail(sender, settings.toaddrs, msg.as_string())
