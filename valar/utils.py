@@ -48,23 +48,6 @@ def get_devices():
             
     return results
 
-def check_workers():
-    for h in hosts:
-        if not check_worker(h['hostname']):
-            return False
-    return True
-
-def check_worker(h):
-    try:
-        cgm = CgminerAPI(host=h)
-        result = cgm.summary()
-    except socket.error as e:
-        subject = "{0} - ERROR".format(h)
-        message = "{0} - Error\n\n{1}".format(h, e)
-        send_mail(subject, message)
-        return False
-    return True
-
 
 def send_mail(subject, message):
     username = settings.gmail_user
