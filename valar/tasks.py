@@ -22,14 +22,15 @@ def save_miner_stats():
   devs = get_devices()
   payload = []
   for s in hosts:
-    if s["name"] in sums:
-        logging.info(s['name'] + ': ' + str(sums[s['name']]['SUMMARY'][0]['MHS 5s']) + ' MH/s')
-        now = datetime.datetime.now()
-        payload.append({ 
-            'hashrate': int(sums[s['name']]['SUMMARY'][0]['MHS 5s'] * 1000), 
-            'miner': s['_id'], 
-            'when': now.strftime('%a, %d %b %Y %X GMT'),
-        })
+    if s["name"] not in sums:
+        sums[s["name"]] = {"SUMMARY": [{'MHS 5s': 0}]}
+    logging.info(s['name'] + ': ' + str(sums[s['name']]['SUMMARY'][0]['MHS 5s']) + ' MH/s')
+    now = datetime.datetime.now()
+    payload.append({ 
+        'hashrate': int(sums[s['name']]['SUMMARY'][0]['MHS 5s'] * 1000), 
+        'miner': s['_id'], 
+        'when': now.strftime('%a, %d %b %Y %X GMT'),
+    })
   headers = {"content-type": "application/json"}
   url = valar_api + "stat/"
   r = requests.post(url, headers = headers, data = json.dumps(payload))
