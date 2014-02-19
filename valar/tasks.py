@@ -53,7 +53,6 @@ def save_miner_stats():
           #db.restarts.insert({"name": h, "when": time.time()})
           restarted = db.restarts.find_one({"hostname": h["hostname"]})
           if restarted:
-              print (time.time() - restarted["when"]) / 60
               if (time.time() - restarted["when"]) / 60 > 10:
                   
                   restarted["when"] = time.time()
@@ -62,9 +61,7 @@ def save_miner_stats():
                   send_mail(subject, message)
                   restart(h["hostname"])
           elif not restarted:
-              
               db.restarts.insert({"hostname": h["hostname"], "when": time.time()})
-              print "elif"
               restart(h["hostname"])
               #send_mail(subject, message)
   
