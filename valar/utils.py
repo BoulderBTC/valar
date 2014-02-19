@@ -22,7 +22,6 @@ else:
     hosts = r.json()['_items']
 
 
-
 def get_summaries():
     results = {"err": []}
     for h in hosts:
@@ -31,7 +30,7 @@ def get_summaries():
             results[h['name']] = cgm.summary()
         except Exception, errno:
             output = "Timeout: " + h['name'] + " " + str(Exception)
-            results["err"].append(h["name"] + " - " + output) 
+            results["err"].append(h) 
             logging.error(output)
     return results
 
