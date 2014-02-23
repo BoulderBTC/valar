@@ -30,3 +30,6 @@ Watching over middle earth since....forever
 If you want #2 to work make sure you have given the ssh user this permission via visudo:
 
     sshuser ALL = (ALL) /sbin/reboot
+
+
+If you have any questions please visit us in #cryptoma on the Freenode IRC Network.
