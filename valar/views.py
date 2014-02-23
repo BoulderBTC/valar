@@ -1,9 +1,8 @@
 from flask import render_template, Response
-import requests
+
 import json
 from valar import app
-from valar.utils import hosts, get_summaries, get_devices, send_mail
-import pprint
+from valar.utils import get_summaries, get_devices
 
 @app.route('/')
 def index():
@@ -16,7 +15,6 @@ def get_miners():
     results = []
     sums = get_summaries()
     devs = get_devices()
-
     for k, v in sums.iteritems():
         if k != "err":
             data = dict(
@@ -24,11 +22,9 @@ def get_miners():
               v['STATUS'][0].items() + \
               v['SUMMARY'][0].items()
             )
-            data['devices'] = devs[k]
+            if k in devs:
+                data['devices'] = devs[k]
 
             results.append(data)
-    if sums["err"]:
-        subject = "Valar ERROR"
-        message = "Error\n\n{0}".format(sums["err"])
-        send_mail(subject, message)
+
     return Response(json.dumps(results), mimetype='application/json')

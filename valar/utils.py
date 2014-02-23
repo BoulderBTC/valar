@@ -1,26 +1,20 @@
-import os
 import logging
-import socket
-import requests
-import json
 import smtplib
 from email.mime.text import MIMEText
+from pymongo import MongoClient
+
 from valar.pycgm import CgminerAPI
 from valar import valar_settings as settings
-from valar_settings import valar_api
 
 
-url = valar_api + "miner/"
-r = requests.get(url)
-if r.ok and len(r.json()['_items']) > 0:
-    hosts = r.json()['_items']
-else:
-    payload = settings.hosts
-    headers = {"content-type": "application/json"}
-    r = requests.post(url, headers = headers, data = json.dumps(payload))
-    r = requests.get(url)
-    hosts = r.json()['_items']
+client = MongoClient()
+client = MongoClient('localhost', 27017)
+db = client.valar
 
+hosts = [x for x in db.miner.find()]
+if not hosts:
+    hosts = settings.hosts
+    db.miner.insert(hosts)
 
 def get_summaries():
     results = {"err": []}
@@ -44,7 +38,6 @@ def get_devices():
         except Exception, errno:
             results["err"].append(h["name"] + " timeout!")
             logging.error("timeout")
-            
     return results
 
 
