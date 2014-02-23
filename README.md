@@ -27,3 +27,6 @@ Watching over middle earth since....forever
 `celery -A valar.tasks worker --loglevel=info --beat`
 3. `python runserver.py`
 
+If you want #2 to work make sure you have given the ssh user this permission via visudo:
+
+    sshuser ALL = (ALL) /sbin/reboot
