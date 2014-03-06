@@ -1,11 +1,11 @@
 from celery import Celery
 import datetime
-import json
+
 
 import logging
 import time
 from valar.utils import db
-from valar.utils import hosts, get_summaries, hosts, send_mail
+from valar.utils import hosts, get_summaries, get_devices, hosts, send_mail
 from valar.fabfile import restart
 from valar import celeryconfig
 
@@ -17,6 +17,7 @@ app.config_from_object(celeryconfig)
 @app.task
 def save_miner_stats():
     sums = get_summaries()
+    devs = get_devices()
     payload = []
 
     for s in hosts:
@@ -33,8 +34,8 @@ def save_miner_stats():
 
     db.stat.insert(payload)
 
-    if sums["err"]:
-        for h in sums["err"]:
+    if devs["err"]:
+        for h in devs["err"]:
             restarted = db.restarts.find_one({"hostname": h["hostname"]})
             if restarted:
                 if (time.time() - restarted["when"]) / 60 > 10:
@@ -45,6 +46,6 @@ def save_miner_stats():
                 db.restarts.insert({"hostname": h["hostname"], "when": time.time()})
                 restart(h["hostname"])
 
-            send_mail(subject="Valar ERROR", message="Error\n\n{0}".format(", ".join([x["name"] for x in sums["err"]])))
+            send_mail(subject="Valar ERROR", message="Error\n\n{0}".format(", ".join([x["name"] for x in devs["err"]])))
 
     return True
