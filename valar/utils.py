@@ -36,7 +36,7 @@ def get_devices():
             data = cgm.devs()
             results[h['name']] = data['DEVS']
         except Exception, errno:
-            results["err"].append(h["name"] + " timeout!")
+            results["err"].append(h)
             logging.error("timeout")
     return results
 
